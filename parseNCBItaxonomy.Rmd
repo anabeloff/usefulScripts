@@ -1,0 +1,57 @@
+---
+title: "NCBI taxonomy fuction"
+output: html_notebook
+---
+```{r libraries}
+library(Biostrings)
+library(data.table)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(RColorBrewer)
+library(taxize)
+```
+
+### Taxonomy function
+Retrieve taxonomy from NCBI using accession numbers.  
+```{r taxsize, cache=TRUE}
+#its_refseq <- read.table(file = "../../../UNITE/ITS_refseq.tab", sep = "|")
+its_refseq <- read.table(file = "../../../UNITE/fungi.28SrRNA.tab", sep = "|")
+colnames(its_refseq)[4] <- "acc"
+ids = genbank2uid(id = its_refseq$acc[c(1:10)])
+funclsf <- classification(ids, db = "ncbi")
+```
+
+Before start we create a named vector with taxon ids and names corresponding to accession numbers. In matching output data column 'samples' must contain these ids.  
+```{r samples}
+acc_ids = as.vector(ids)
+names(acc_ids) <- its_refseq$acc[c(1:10)]
+```
+
+Function to extract taxonomy from GeneBank.  
+Here you need to provide vector with GB accession numbers. The same ids must be used in following steps. Inside the function is vector containing rank names to be used for all data.   
+For this function you need to provide:  
+* Classification data, out put from 'taxsize::classification()'.
+* Accession numbers vector used to retrieve initial classification.
+```{r taxonomy GB}
+taxonomy_gb <- function(classification_data = funclsf, acc = acc_ids) {
+          taxon_groups <- factor(c("species", "genus", "family", "order", "class", "phylum", "kingdom"))
+          levels(taxon_groups) <- c("species", "genus", "family", "order", "class", "phylum", "kingdom")
+          classif_fun <- function(x) {
+            y = x[match(taxon_groups, x$rank),-3]
+            z = data.frame(y, stringsAsFactors = F, row.names = NULL)
+            z$rank <- taxon_groups
+            z = tidyr::spread(z, key = rank, value = name)
+            z
+          }
+      
+      clsf <- lapply(classification_data, classif_fun)
+      tax_gb <- bind_rows(clsf) 
+      tax_gb$tax_id <- names(clsf)
+      tax_gb <- mutate(tax_gb, samples = names(acc)[match(tax_gb$tax_id,acc)])
+tax_gb     
+}
+tax <- taxonomy_gb()
+tax
+```
+
