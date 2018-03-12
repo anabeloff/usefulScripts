@@ -18,11 +18,7 @@ To create taxid file using tax2taxid.R you need to provide two arguments:
 
 Input file supposed to be taxonomy file, what is basically the same as sequence names for FASTA file. Only here sequence ID and taxonomy should be separated by tab.<br>
 Example:<br>
-<blockquote>
 GU981582	Root;Fungi;Ascomycota;Eurotiomycetes;Eurotiales;Aspergillaceae;Penicillium;Penicillium_abidjanum;CBS246.67;<br>
-JN714929	Root;Fungi;Ascomycota;Eurotiomycetes;Eurotiales;Aspergillaceae;Penicillium;Penicillium_adametzii;CBS209.28;<br>
-KC773822	Root;Fungi;Ascomycota;Eurotiomycetes;Eurotiales;Aspergillaceae;Penicillium;Penicillium_adametzii;DTO190A8;<br>
-</blockquote>
 
 This script is very simple and contains predefined ranks:<br>
 "norank", "domain", "phylum", "class", "order", "family", "genus", "species", "strain".<br>
