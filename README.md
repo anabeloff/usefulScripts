@@ -35,7 +35,8 @@ Options:
 
 Usage example:  
 
-batch_rename.sh -p "*-R*" -n "_R" -f *.fastq.gz  
+`batch_rename.sh -p "*-R*" -n "_R" -f *.fastq.gz`
+
 
 
 
