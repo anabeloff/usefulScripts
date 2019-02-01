@@ -5,9 +5,9 @@ These include R and Bash scripts and pipelines. As well as R Notebook files with
 </br>
 
 <h2>Tax2taxid.R</h2>
-This script comes useful if you want to train RDP classifer with your own dataset. Training requers a taxid file along with sequence file.  
+This script comes useful if you want to train RDP classifaer with your own dataset. Training requers a taxid file along with sequence file.  
 </br>
-For training the sequence FASTA file hast to have sequence names formated as: sequence ID, space, sequence taxonomy (where each taxonomic group separated by ';'). 
+For training, the sequence FASTA file has to have sequence names formated as: sequence ID, space, sequence taxonomy (where each taxonomic group separated by ';'). 
 </br>
 The taxonomy id file example you can find on RDP classifier page.
 
