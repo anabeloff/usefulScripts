@@ -23,3 +23,19 @@ GU981582	Root;Fungi;Ascomycota;Eurotiomycetes;Eurotiales;Aspergillaceae;Penicill
 This script is very simple and contains predefined ranks:<br>
 "norank", "domain", "phylum", "class", "order", "family", "genus", "species", "strain".<br>
 If your ranks are somewhat different change variable 'rank_names' in the code. 
+
+<h2>batch_rename.sh</h2>
+</br>
+Bash script to change specified part (or entire) of a name for multiple files.  
+Options:  
+
+-p: regex character string. If you use "*" script will replace entire name.  
+-n: replacement character string.  
+-f: path to file(s).  
+
+Usage example:  
+
+batch_rename.sh -p "*-R*" -n "_R" -f *.fastq.gz  
+
+
+
