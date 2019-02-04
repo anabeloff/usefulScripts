@@ -1,7 +1,7 @@
 <h2> Useful Scripts</h2>
 </br>
-Collection of scripts and pipelenes I find useful in daily work with biological data analysis.
-These include R and Bash scripts and pipelines. As well as R Notebook files with code and manuals. 
+Collection of scripts and pipelenes I find useful in daily work with biological data.
+These include R and Bash scripts and pipelines, as well as R Notebooks with code examples and manuals. 
 </br>
 
 ---
@@ -44,8 +44,8 @@ Options:
 
 ## readBLAST.R
 
-This is a basic R script to read BLAST tab output files into R dataframe. The script can be called in R, but not in Bash command line.  
-The Function assigns common names and content type to each column (character or number). It useful to orginese BLAST data in common format.
+This is a basic R script to read BLAST tab output files into R dataframe. The script to be called in R as a function.  
+The Function assigns common names and content types (character or number) to each column. It useful to orginese BLAST data in unified format.
 
 Options:  
 
@@ -80,8 +80,8 @@ blastData <- readBLAST(blastFile = system.file("extdata", "so_proteins_blastx.ta
 
 ## ParseGFF.R
 
-Parse GFF3 file format. This is a basic R script function to read GFF file into R dataframe.  
-The functions helps to keep GFF data in R in universal format.  
+Parse GFF3 annotation. This is a basic R script function to read GFF file into R dataframe.  
+This function allows to parse annotation in 9th column into separate columns. The functions helps to keep GFF data in R in universal format.  
 
 Options:  
 
@@ -89,6 +89,11 @@ Options:
 - field: Character string vector of names for attributes in the 9th column of GFF file. If specified, additional columns with attributes names will created.
  
 #### Usage:
+
+For example,  GFF3 in 9th column contains annatations gene ID and Name, which appears something like that:  
+"ID=GENE0809;Name=PTEN"  
+
+If you specify 'field' option in the function it will extract IDs and Names, and place them in individual columns named accordingly.  
 
 ```
 # Default options
