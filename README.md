@@ -1,19 +1,66 @@
-<h2> Useful Scripts</h2>
-</br>
+Useful Scripts
+==============
+
 Collection of scripts and pipelenes I find useful in daily work with biological data.
 These include R and Bash scripts and pipelines, as well as R Notebooks with code examples and manuals. 
-</br>
+
 
 ---
+## Collection of AWS scripts
 
-<h2>Tax2taxid.R</h2>
+These scripts are examples of how to run pipeline in AWS platform.  
+Scripts have "onInstance" in the name. Here is a basic template:
+
+``` bash
+
+## Important system variables
+## These must be outside of 'UDATA' variable.
+   
+    # System image
+    # Amazon Linux version from 2018
+    # with pre installed Docker
+    AMI_IMAGE="ami-0d4c310a3ab39a06b"
+    
+    # Memory optimised instance
+    # CPU 4
+    # ECU 19
+    # RAM 32Gb
+    # SSD 150Gb
+    # PRICE 0.288
+    INSTANCE_TYPE="r5d.xlarge"
+    THREADS=4
+
+UDATA="$( cat <<EOF
+#!/bin/bash
+
+  # Insert BASH script here.
+
+EOF
+)"
+ 
+ 
+# Run instance command
+aws ec2 run-instances \
+--image-id $AMI_IMAGE \
+--iam-instance-profile Name="UltimateRole" \
+--security-group-ids yourEnv \
+--count 1 \
+--instance-initiated-shutdown-behavior terminate \
+--user-data "$UDATA" \
+--instance-type $INSTANCE_TYPE \
+--key-name awsKey \
+--query 'Instances[0].InstanceId'
+```
+
+
+## Tax2taxid.R
 This script comes useful if you want to train RDP classifaer with your own dataset. Training requers a taxid file along with sequence file.  
-</br>
+
 For training, the sequence FASTA file has to have sequence names formated as: sequence ID, space, sequence taxonomy (where each taxonomic group separated by ';'). 
-</br>
+
 The taxonomy id file example you can find on RDP classifier page.
 
-<h3>Usage</h3>
+#### Usage
 To create taxid file using tax2taxid.R you need to provide two arguments:
 1. Input file.<br>
 2. Output file name.<br>
@@ -28,8 +75,8 @@ If your ranks are somewhat different change variable 'rank_names' in the code.
 
 ---
 
-<h2>batch_rename.sh</h2>
-</br>
+## batch_rename.sh
+
 Bash script to change specified part (or entire) of a name for multiple files.  
 Options:  
 
@@ -37,9 +84,11 @@ Options:
 -n: replacement character string.  
 -f: path to file(s).  
 
-#### Usage example:  
+#### Usage:
 
-`batch_rename.sh -p "*-R*" -n "_R" -f *.fastq.gz`
+``` bash
+batch_rename.sh -p "*-R*" -n "_R" -f *.fastq.gz
+```
 
 
 ## readBLAST.R
@@ -57,7 +106,7 @@ Options:
 
 #### Usage:
 
-```
+``` r
 blastData <- readBLAST(blastFile,
                         bitScore = NA,
                         eValue = NA,
@@ -95,7 +144,7 @@ For example,  GFF3 in 9th column contains annatations gene ID and Name, which ap
 
 If you specify 'field' option in the function it will extract IDs and Names, and place them in individual columns named accordingly.  
 
-```
+``` r
 # Default options
 GFF <- parseGFF(gff = NA,
                 field = NA)
