@@ -4,8 +4,37 @@ Useful Scripts
 Collection of scripts and pipelenes I find useful in daily work with biological data.
 These include R and Bash scripts and pipelines, as well as R Notebooks with code examples and manuals. 
 
-
 ---
+
+## BASH commands
+
+Here is some useful BASH commands, helpful in everyday work. 
+
+#### Cnvert FASTQ to FASTA
+
+Use `sed` to convert FASTQ to FASTA. There are some other ways to use `sed` for that puppose, but this one I find most accurate.
+
+``` bash
+sed -n '1~4s/^@/>/p;2~4p' 
+```
+
+#### Extract sequences from FASTA
+
+If you need to extract sequences from FASTA file using sequnces names stored in a TAB file.  
+
+``` bash
+cut -f1 FILE.tab | grep -A 1 -f - sequnces.fasta | sed '/^--$/d' > out.fasta
+```
+How it works:
+
+- `cut` takes first column from `FILE.tab` (or any other column contaning sequnces names as in FASTA file). It produces a list with names in each line and pipes to `grep` command.
+- `grep` looks for pattern in `sequences.fasta`. Here we used `-f -` which indicates to take list from standard input instead of file. Option `-A 1` tells to output line with pattern plus one line after it. `-w` indicates that pattern is whole word.
+- `sed` command removes lines that contain "--" only. `grep` puts "--" separator after every pattern output. 
+
+**IMPORTANT**  
+ This command will not work if FASTA sequence is multiline. It only works if FASTA sequence is in signle line after line with name.
+ 
+ 
 ## Collection of AWS scripts
 
 These scripts are examples of how to run pipeline in AWS platform.  
