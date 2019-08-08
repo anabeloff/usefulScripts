@@ -95,12 +95,12 @@ cut -f1 FILE.tab | grep -A 1 -f - sequnces.fasta | sed '/^--$/d' > out.fasta
 ```
 How it works:
 
-- `cut` takes first column from `FILE.tab` (or any other column contaning sequnces names as in FASTA file). It produces a list with names in each line and pipes to `grep` command.
-- `grep` looks for pattern in `sequences.fasta`. Here we used `-f -` which indicates to take list from standard input instead of file. Option `-A 1` tells to output line with pattern plus one line after it. `-w` indicates that pattern is whole word.
+- `cut` takes first column from `FILE.tab` (or any other column contaning sequnces names). It produces a list with names in each line and pipes it to `grep` command.
+- `grep` looks for pattern in `sequences.fasta`. Here we supply our names list as pattern using `-f -` option. `-f` takes a pattern list from file, but because we put `-` it takes standard input instead. Option `-A 1` tells to output one extra line after line with pattern.
 - `sed` command removes lines that contain "--" only. `grep` puts "--" separator after every pattern output. 
 
 **IMPORTANT**  
- This command will not work if FASTA sequence is multiline. It only works if FASTA sequence is in signle line after line with name.
+ This command will not work if FASTA sequence is multiline. It only works if FASTA sequence is in signle line after the line with its name.
  
 ## BASH scripts
 
